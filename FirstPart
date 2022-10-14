@@ -1,0 +1,51 @@
+import pandas
+import numpy
+from math import pi
+
+
+#Lis les fichiers csv et les convertis en array numpy de int
+data_Elsenborn = pandas.read_csv("Elsenborn.csv",usecols=[1,2,3])
+data_Beauvechain = pandas.read_csv("Beauvechain.csv",usecols=[1,2,3])
+data_Beauvechain = pandas.DataFrame.to_numpy(data_Beauvechain, dtype =int)
+data_Elsenborn = pandas.DataFrame.to_numpy(data_Elsenborn, dtype =int)
+
+#retrouve les indices de début de période 01/01/2017 et de fin 01/01/2021
+indice_debut_B = numpy.where(data_Beauvechain == 20170101)[0][0]
+indice_debut_E = numpy.where(data_Elsenborn == 20170101)[0][0]
+indice_fin_B = numpy.where(data_Beauvechain == 20210101)[0][0]
+indice_fin_E = numpy.where(data_Elsenborn == 20210101)[0][0]
+
+#réduit les array aux seules dates utiles
+data_Elsenborn = data_Elsenborn[indice_debut_E:indice_fin_E+1]
+data_Beauvechain = data_Beauvechain[indice_debut_B:indice_fin_B+1]
+
+
+#les données vents avec les erreurs filtrées
+dataE = [row[1] for row in data_Elsenborn]
+dataB = [row[1] for row in data_Beauvechain]
+#le nombre de jours total avec les erreurs
+nbrdays = len(dataE)
+
+decal =0
+for i in range(0, len(mask)):
+	if mask[i]:
+		dataB = numpy.delete(dataB, i-decal)
+		dataE = numpy.delete(dataE, i-decal)
+		decal+=1
+
+a
+#Calcule la puissance d'une ferme de 8 éoliennes
+def Electric_Power(wind_speed):
+	S = pi*32**2
+	Rho = 1.2
+	K= 0.42
+	val = 0;
+	for i in wind_speed:
+	
+		if i<90:
+			val += (0.5*K*Rho*S*(i/3.6)**3)*8
+	return val/10**6
+	
+	
+print(Electric_Power(dataB))
+print(Electric_Power(dataE))
